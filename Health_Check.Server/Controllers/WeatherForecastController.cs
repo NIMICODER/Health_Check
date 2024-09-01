@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Health_Check.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -13,10 +13,13 @@ namespace Health_Check.Server.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger,
+            IConfiguration configuation)
         {
             _logger = logger;
+            var defaultLogLevel = configuation["Logging:LogLevel:Default"];
         }
+
 
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
